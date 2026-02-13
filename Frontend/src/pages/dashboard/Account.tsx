@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import api from '../../lib/api';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/Card';
+import { Card, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Profile } from '../../types';
 import {
     User,
     MapPin,
-    IdCard,
+    CreditCard,
     Briefcase,
     Users,
     Shield,
     ChevronDown,
     ChevronRight,
-    Save,
     X,
     CheckCircle2,
     AlertCircle,
@@ -26,7 +25,7 @@ type SectionId = 'personal' | 'address' | 'identity' | 'employment' | 'nominee' 
 const sections: { id: SectionId; label: string; icon: React.ElementType; description: string }[] = [
     { id: 'personal', label: 'Personal Information', icon: User, description: 'Name, contact & basic details' },
     { id: 'address', label: 'Address', icon: MapPin, description: 'Residential address' },
-    { id: 'identity', label: 'Identity & KYC', icon: IdCard, description: 'PAN, Aadhaar' },
+    { id: 'identity', label: 'Identity & KYC', icon: CreditCard, description: 'PAN, Aadhaar' },
     { id: 'employment', label: 'Employment', icon: Briefcase, description: 'Job & income details' },
     { id: 'nominee', label: 'Nominee', icon: Users, description: 'Nominee for accounts' },
     { id: 'security', label: 'Security', icon: Shield, description: 'Password & verification' },
