@@ -25,28 +25,20 @@ router.get('/', auth, async (req, res) => {
 // @access  Private
 router.post('/', auth, async (req, res) => {
     const {
-        phone,
-        dob,
-        gender,
-        employment_type,
-        pan_number,
-        full_name,
-        email,
-        onboarding_completed
+        phone, dob, gender, marital_status, employment_type, company_name, designation, annual_income,
+        pan_number, aadhaar_last4, full_name, email, onboarding_completed,
+        address_line1, address_line2, city, state, pincode, country,
+        nominee_name, nominee_relation, nominee_contact,
     } = req.body;
 
-    // Build profile object
-    const profileFields = {};
-    profileFields.user = req.user.id;
-    if (phone) profileFields.phone = phone;
-    if (dob) profileFields.dob = dob;
-    if (gender) profileFields.gender = gender;
-    if (employment_type) profileFields.employment_type = employment_type;
-    if (pan_number) profileFields.pan_number = pan_number;
-    if (full_name) profileFields.full_name = full_name;
-    if (email) profileFields.email = email;
+    const profileFields = { user: req.user.id, updated_at: Date.now() };
+    const optional = [
+        'phone', 'dob', 'gender', 'marital_status', 'employment_type', 'company_name', 'designation', 'annual_income',
+        'pan_number', 'aadhaar_last4', 'full_name', 'email', 'address_line1', 'address_line2', 'city', 'state', 'pincode', 'country',
+        'nominee_name', 'nominee_relation', 'nominee_contact',
+    ];
+    optional.forEach((key) => { if (req.body[key] !== undefined) profileFields[key] = req.body[key]; });
     if (onboarding_completed !== undefined) profileFields.onboarding_completed = onboarding_completed;
-    profileFields.updated_at = Date.now();
 
     try {
         let profile = await Profile.findOne({ user: req.user.id });

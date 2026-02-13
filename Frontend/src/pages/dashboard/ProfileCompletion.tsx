@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import api from '../../lib/api';
@@ -14,12 +14,21 @@ export default function ProfileCompletion() {
     const [error, setError] = useState<string | null>(null);
 
     const [formData, setFormData] = useState({
+        full_name: '',
         phone: '',
         dob: '',
         gender: '',
+        marital_status: '',
         employment_type: '',
         pan_number: '',
+        city: '',
+        state: '',
+        pincode: '',
     });
+
+    useEffect(() => {
+        if (user?.full_name) setFormData((prev) => ({ ...prev, full_name: user.full_name! }));
+    }, [user?.full_name]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         let { name, value } = e.target;
@@ -46,13 +55,17 @@ export default function ProfileCompletion() {
             if (!user) throw new Error('No user found');
 
             await api.post('/profile', {
+                full_name: formData.full_name || user.full_name || user.email.split('@')[0],
+                email: user.email,
                 phone: formData.phone,
                 dob: formData.dob,
                 gender: formData.gender,
+                marital_status: formData.marital_status,
                 employment_type: formData.employment_type,
                 pan_number: formData.pan_number,
-                full_name: user.full_name || user.email.split('@')[0],
-                email: user.email,
+                city: formData.city,
+                state: formData.state,
+                pincode: formData.pincode,
                 onboarding_completed: true,
             });
 
@@ -92,6 +105,14 @@ export default function ProfileCompletion() {
                             </div>
                         )}
 
+                        <Input
+                            label="Full Name"
+                            name="full_name"
+                            placeholder="As per PAN / Aadhaar"
+                            value={formData.full_name}
+                            onChange={handleChange}
+                        />
+
                         <div className="grid md:grid-cols-2 gap-6">
                             <Input
                                 label="Phone Number"
@@ -102,7 +123,6 @@ export default function ProfileCompletion() {
                                 onChange={handleChange}
                                 required
                             />
-
                             <Input
                                 label="Date of Birth"
                                 name="dob"
@@ -130,6 +150,21 @@ export default function ProfileCompletion() {
                                 </select>
                             </div>
 
+                            <div className="space-y-1">
+                                <label className="block text-sm font-medium text-slate-700">Marital Status</label>
+                                <select
+                                    name="marital_status"
+                                    className="flex h-10 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                    value={formData.marital_status}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                </select>
+                            </div>
                             <div className="space-y-1">
                                 <label className="block text-sm font-medium text-slate-700">Employment Type</label>
                                 <select
@@ -159,6 +194,12 @@ export default function ProfileCompletion() {
                                 required
                             />
                             <p className="text-xs text-slate-500">Enter PAN in uppercase (example: ABCDE1234F).</p>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-6">
+                            <Input label="City" name="city" placeholder="e.g. Mumbai" value={formData.city} onChange={handleChange} />
+                            <Input label="State" name="state" placeholder="e.g. Maharashtra" value={formData.state} onChange={handleChange} />
+                            <Input label="Pincode" name="pincode" placeholder="110001" value={formData.pincode} onChange={handleChange} maxLength={6} />
                         </div>
 
                         {/* Document Upload Placeholder */}

@@ -26,9 +26,9 @@ export default function ProtectedLayout() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 flex">
+        <div className="min-h-screen bg-slate-50/80 flex">
             <Sidebar />
-            <main className="flex-1 overflow-y-auto h-screen p-8">
+            <main className="flex-1 overflow-y-auto h-screen p-6 sm:p-8 max-w-[1600px]">
                 <Outlet />
             </main>
         </div>

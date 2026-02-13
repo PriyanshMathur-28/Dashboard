@@ -33,14 +33,15 @@ export function FinancialOverviewChart() {
                             fontSize={12}
                             tickLine={false}
                             axisLine={false}
-                            tickFormatter={(value) => `$${value}`}
+                            tickFormatter={(value) => `₹ ${value}`}
                         />
                         <Tooltip
-                            cursor={{ fill: 'transparent' }}
-                            contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)' }}
+                            cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+                            contentStyle={{ borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
+                            formatter={(value: number) => `₹ ${value.toLocaleString('en-IN')}`}
                         />
-                        <Bar dataKey="income" name="Income" fill="#10b981" radius={[4, 4, 0, 0]} />
-                        <Bar dataKey="expense" name="Expenses" fill="#64748b" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="income" name="Income" fill="#10b981" radius={[6, 6, 0, 0]} />
+                        <Bar dataKey="expense" name="Expenses" fill="#64748b" radius={[6, 6, 0, 0]} />
                     </BarChart>
                 </ResponsiveContainer>
             </CardContent>
