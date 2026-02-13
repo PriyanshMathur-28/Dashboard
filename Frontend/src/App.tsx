@@ -7,7 +7,7 @@ import ProtectedLayout from './components/ProtectedLayout';
 import Overview from './pages/dashboard/Overview';
 import ProfileCompletion from './pages/dashboard/ProfileCompletion';
 import Reports from './pages/dashboard/Reports';
-import Account from './pages/dashboard/Account';
+// import Account from './pages/dashboard/Account';
 
 function App() {
     return (
@@ -22,7 +22,7 @@ function App() {
                         <Route path="/dashboard" element={<Overview />} />
                         <Route path="/analytics" element={<Navigate to="/dashboard" replace />} /> {/* Placeholder */}
                         <Route path="/reports" element={<Reports />} />
-                        <Route path="/account" element={<Account />} />
+                        {/* <Route path="/account" element={<Account />} /> */}
                         <Route path="/complete-profile" element={<ProfileCompletion />} />
                     </Route>
                 </Routes>
